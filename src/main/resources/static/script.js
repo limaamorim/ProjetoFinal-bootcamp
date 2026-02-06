@@ -2,11 +2,21 @@ const API_URL = "https://josefernando-b6adcrbwfyh3czff.canadacentral-01.azureweb
 
 // Variáveis globais
 let produtos = [];
+let produtoEditando = null;
 
 // Elementos DOM
 const produtosContainer = document.getElementById('tarefasContainer');
 const emptyState = document.getElementById('emptyState');
 const themeToggle = document.getElementById('themeToggle');
+const formTitle = document.getElementById('formTitle');
+const submitBtn = document.getElementById('submitBtn');
+const submitText = document.getElementById('submitText');
+const cancelBtn = document.getElementById('cancelBtn');
+const produtoForm = document.getElementById('produtoForm');
+const produtoIdInput = document.getElementById('produtoId');
+const produtoNomeInput = document.getElementById('produtoNome');
+const produtoPrecoInput = document.getElementById('produtoPreco');
+const produtoQuantidadeInput = document.getElementById('produtoQuantidade');
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,55 +37,79 @@ async function buscarProdutos() {
     }
 }
 
-// Adicionar produto
-async function adicionarProduto(e) {
+// Salvar produto (adicionar ou atualizar)
+async function salvarProduto(e) {
     e.preventDefault();
 
-    const nome = document.getElementById("produtoNome").value.trim();
-    const preco = parseFloat(document.getElementById("produtoPreco").value);
-    const quantidade = parseInt(document.getElementById("produtoQuantidade").value);
+    const nome = produtoNomeInput.value.trim();
+    const preco = parseFloat(produtoPrecoInput.value);
+    const quantidade = parseInt(produtoQuantidadeInput.value);
+    const id = produtoIdInput.value;
 
-    if (!nome || isNaN(preco) || isNaN(quantidade)) {
-        alert("Preencha todos os campos corretamente.");
+    // Validações
+    if (!nome) {
+        mostrarErro("O nome do produto é obrigatório.");
+        return;
+    }
+
+    if (isNaN(preco) || preco <= 0) {
+        mostrarErro("O preço deve ser maior que zero.");
+        produtoPrecoInput.focus();
+        return;
+    }
+
+    if (isNaN(quantidade) || quantidade <= 0) {
+        mostrarErro("A quantidade deve ser maior que zero.");
+        produtoQuantidadeInput.focus();
         return;
     }
 
     try {
-        await fetch(API_URL, {
-            method: "POST",
+        const url = id ? `${API_URL}/${id}` : API_URL;
+        const method = id ? "PUT" : "POST";
+
+        await fetch(url, {
+            method: method,
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nome, preco, quantidade })
         });
+        
         buscarProdutos();
-        e.target.reset();
+        cancelarEdicao();
+        mostrarSucesso(id ? "Produto atualizado com sucesso!" : "Produto adicionado com sucesso!");
     } catch (error) {
-        console.error("Erro ao adicionar produto:", error);
-        mostrarErro("Não foi possível adicionar o produto.");
+        console.error("Erro ao salvar produto:", error);
+        mostrarErro(id ? "Não foi possível atualizar o produto." : "Não foi possível adicionar o produto.");
     }
 }
 
-// Editar produto
-async function editarProduto(id) {
+// Editar produto - preenche o formulário
+function editarProduto(id) {
     const produto = produtos.find(p => p.id === id);
-    if (!produto) return;
-
-    const nome = prompt("Nome:", produto.nome);
-    const preco = parseFloat(prompt("Preço:", produto.preco));
-    const quantidade = parseInt(prompt("Quantidade:", produto.quantidade));
-
-    if (!nome || isNaN(preco) || isNaN(quantidade)) return;
-
-    try {
-        await fetch(`${API_URL}/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, preco, quantidade })
-        });
-        buscarProdutos();
-    } catch (error) {
-        console.error("Erro ao editar produto:", error);
-        mostrarErro("Não foi possível editar o produto.");
+    if (!produto) {
+        mostrarErro("Produto não encontrado.");
+        return;
     }
+
+    // Preencher campos do formulário
+    produtoIdInput.value = produto.id;
+    produtoNomeInput.value = produto.nome;
+    produtoPrecoInput.value = produto.preco;
+    produtoQuantidadeInput.value = produto.quantidade;
+
+    // Mudar título e botão do formulário
+    formTitle.textContent = "Editar Produto";
+    submitBtn.querySelector('i').className = 'fas fa-save';
+    submitText.textContent = 'Atualizar Produto';
+    cancelBtn.style.display = 'inline-flex';
+
+    // Scroll para o formulário
+    produtoForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // Focar no primeiro campo
+    produtoNomeInput.focus();
+    
+    produtoEditando = produto;
 }
 
 // Remover produto
@@ -149,6 +183,17 @@ function verificarPreferenciaTema() {
     }
 }
 
+// Cancelar edição
+function cancelarEdicao() {
+    produtoForm.reset();
+    produtoIdInput.value = '';
+    formTitle.textContent = "Adicionar Produto";
+    submitBtn.querySelector('i').className = 'fas fa-plus';
+    submitText.textContent = 'Adicionar Produto';
+    cancelBtn.style.display = 'none';
+    produtoEditando = null;
+}
+
 // Mostrar mensagem de erro
 function mostrarErro(msg) {
     const erro = document.createElement('div');
@@ -158,8 +203,31 @@ function mostrarErro(msg) {
         padding: 15px 20px; border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         z-index: 1000; max-width: 300px;
+        animation: slideIn 0.3s ease-out;
     `;
     erro.textContent = msg;
     document.body.appendChild(erro);
-    setTimeout(() => document.body.removeChild(erro), 5000);
+    setTimeout(() => {
+        erro.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => document.body.removeChild(erro), 300);
+    }, 5000);
+}
+
+// Mostrar mensagem de sucesso
+function mostrarSucesso(msg) {
+    const sucesso = document.createElement('div');
+    sucesso.style.cssText = `
+        position: fixed; top: 20px; right: 20px;
+        background-color: var(--success); color: white;
+        padding: 15px 20px; border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1000; max-width: 300px;
+        animation: slideIn 0.3s ease-out;
+    `;
+    sucesso.textContent = msg;
+    document.body.appendChild(sucesso);
+    setTimeout(() => {
+        sucesso.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => document.body.removeChild(sucesso), 300);
+    }, 3000);
 }
