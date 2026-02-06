@@ -265,7 +265,7 @@ Este projeto foi desenvolvido para fins educacionais.
 
 <div align="center">
 
-**Desenvolvido com ❤️ durante o Bootcamp Java**
+**Desenvolvido durante o Bootcamp Java**
 
 [⬆ Voltar ao topo](#-gerenciador-de-produtos)
 
