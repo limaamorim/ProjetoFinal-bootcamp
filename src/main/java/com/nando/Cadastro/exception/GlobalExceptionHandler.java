@@ -40,17 +40,5 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(error);
     }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGeral(Exception ex) {
-
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Erro interno",
-                "Erro inesperado no servidor"
-        );
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
-    }
 }
 
