@@ -4,55 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Produtos</title>
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-box"></i>
-                <span>Gerenciador de Produtos</span>
-            </div>
+<div class="container">
+
+    <!-- header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-box"></i>
+            <span>Gerenciador de Produtos</span>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <a
+                    href="https://josefernando-b6adcrbwfyh3czff.canadacentral-01.azurewebsites.net/swagger-ui/index.html"
+                    target="_blank"
+                    style="text-decoration: none;"
+            >
+                <button>
+                    <i class="fas fa-book"></i> API Docs
+                </button>
+            </a>
+
             <button class="theme-toggle" id="themeToggle">
                 <i class="fas fa-moon"></i>
             </button>
-        </header>
-
-        <div class="add-task-form">
-            <h2>Adicionar Produto</h2>
-            <form onsubmit="adicionarProduto(event)">
-                <div class="form-group">
-                    <label>Nome *</label>
-                    <input id="produtoNome" required placeholder="Ex: Produto A">
-                </div>
-                <div class="form-group">
-                    <label>Preço *</label>
-                    <input id="produtoPreco" type="number" step="0.01" required placeholder="Ex: 49.90">
-                </div>
-                <div class="form-group">
-                    <label>Quantidade *</label>
-                    <input id="produtoQuantidade" type="number" required placeholder="Ex: 10">
-                </div>
-                <button type="submit">
-                    <i class="fas fa-plus"></i> Adicionar Produto
-                </button>
-            </form>
         </div>
+    </header>
 
-        <div class="tarefas-container" id="tarefasContainer">
-            <div class="empty-state" id="emptyState">
-                <i class="fas fa-box-open"></i>
-                <h3>Nenhum produto cadastrado</h3>
-                <p>Adicione um produto para começar</p>
+    <!-- form -->
+    <div class="add-task-form">
+        <h2>Adicionar Produto</h2>
+        <form onsubmit="adicionarProduto(event)">
+            <div class="form-group">
+                <label>Nome *</label>
+                <input id="produtoNome" required placeholder="Ex: Produto A">
             </div>
-        </div>
+
+            <div class="form-group">
+                <label>Preço *</label>
+                <input id="produtoPreco" type="number" step="0.01" required placeholder="Ex: 49.90">
+            </div>
+
+            <div class="form-group">
+                <label>Quantidade *</label>
+                <input id="produtoQuantidade" type="number" required placeholder="Ex: 10">
+            </div>
+
+            <button type="submit">
+                <i class="fas fa-plus"></i> Adicionar Produto
+            </button>
+        </form>
     </div>
 
-    <footer>
-        <p>José Fernando &copy; 2025 - Gerenciador de Produtos</p>
-    </footer>
+    <!-- lista -->
+    <div class="tarefas-container" id="tarefasContainer">
+        <div class="empty-state" id="emptyState">
+            <i class="fas fa-box-open"></i>
+            <h3>Nenhum produto cadastrado</h3>
+            <p>Adicione um produto para começar</p>
+        </div>
+    </div>
+</div>
 
-    <script src="script.js"></script>
+<!-- footer -->
+<footer>
+    <p>José Fernando &copy; 2025 - Gerenciador de Produtos</p>
+
+    <div style="margin-top: 12px; display: flex; gap: 25px; justify-content: center;">
+        <a href="https://github.com/limaamorim/ProjetoFinal-bootcamp" target="_blank" title="GitHub">
+            <i class="fab fa-github fa-3x"></i>
+        </a>
+
+        <a href="https://www.linkedin.com/in/jos%C3%A9-fernando-lima-amorim/" target="_blank" title="LinkedIn">
+            <i class="fab fa-linkedin fa-3x"></i>
+        </a>
+
+        <a href="https://www.instagram.com/nand9l_/" target="_blank" title="Instagram">
+            <i class="fab fa-instagram fa-3x"></i>
+        </a>
+
+    </div>
+</footer>
+
+
+<script src="script.js"></script>
 </body>
 </html>

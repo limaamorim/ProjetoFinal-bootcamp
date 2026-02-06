@@ -114,8 +114,8 @@ function renderizarProdutos() {
             </div>
 
             <div class="tarefa-body">
-                <p class="tarefa-descricao">💰 Preço: R$ ${p.preco.toFixed(2)}</p>
-                <p class="tarefa-descricao">📦 Quantidade: ${p.quantidade}</p>
+                <p class="tarefa-descricao">Preço: R$ ${p.preco.toFixed(2)}</p>
+                <p class="tarefa-descricao">Quantidade: ${p.quantidade}</p>
             </div>
 
             <div class="tarefa-footer">
