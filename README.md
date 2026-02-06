@@ -1,17 +1,15 @@
 <div align="center">
 
-# 🛒 Cadastro de Produtos — Spring Boot API
+# 🛒 Gerenciador de Produtos
 
-### API REST para Cadastro, Consulta e Gerenciamento de Produtos
+### Projeto Final - Bootcamp Java | API REST para Cadastro e Gerenciamento de Produtos
 
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java Logo" width="80"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Logo" width="80"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="Database Logo" width="80"/>
+[![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.2-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![H2 Database](https://img.shields.io/badge/H2-Database-4479A1?style=for-the-badge&logo=h2&logoColor=white)](https://www.h2database.com/)
+[![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)](https://swagger.io/)
 
-[![Java](https://img.shields.io/badge/Java-25-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
-[![JPA](https://img.shields.io/badge/JPA-Hibernate-blue?style=for-the-badge)](https://hibernate.org/)
-[![H2](https://img.shields.io/badge/H2-Database-lightgrey?style=for-the-badge)](https://www.h2database.com/)
+[🌐 **Aplicação em Produção**](https://josefernando-b6adcrbwfyh3czff.canadacentral-01.azurewebsites.net/) | [📚 **Documentação Swagger**](https://josefernando-b6adcrbwfyh3czff.canadacentral-01.azurewebsites.net/swagger-ui/index.html)
 
 </div>
 
@@ -19,163 +17,256 @@
 
 ## 📋 Sobre o Projeto
 
-API REST desenvolvida em **Spring Boot** para realizar o **cadastro e gerenciamento de produtos**, utilizando:
+Este é o **projeto final do Bootcamp Java**, desenvolvido como uma API REST completa para cadastro e gerenciamento de produtos. A aplicação foi construída utilizando **Spring Boot** e está hospedada no **Azure App Service**, demonstrando conhecimentos em desenvolvimento backend, arquitetura de APIs e deploy em nuvem.
 
-- **JPA / Hibernate** para mapeamento das entidades
-- **Banco de dados H2 em memória** para testes e desenvolvimento
-- Arquitetura em camadas (**Controller, Service e Repository**)
+### 🎯 Objetivos do Projeto
 
-> 🎯 **Ideal para:** Estudantes iniciantes em Spring Boot que já conhecem **POO** e desejam aprender **API REST + Banco de Dados + JPA**.
+- Implementar uma API REST completa seguindo boas práticas
+- Aplicar conceitos de **JPA/Hibernate** para persistência de dados
+- Utilizar **DTOs** para transferência de dados
+- Implementar tratamento de exceções global
+- Documentar a API com **Swagger/OpenAPI**
+- Deploy da aplicação em produção (Azure)
+
+---
+
+## 🚀 Tecnologias Utilizadas
+
+| Tecnologia | Versão | Descrição |
+|------------|--------|-----------|
+| **Java** | 17 | Linguagem de programação |
+| **Spring Boot** | 3.2.2 | Framework Java para desenvolvimento |
+| **Spring Data JPA** | - | Persistência de dados |
+| **H2 Database** | - | Banco de dados em memória |
+| **SpringDoc OpenAPI** | 2.5.0 | Documentação automática da API |
+| **Maven** | - | Gerenciador de dependências |
+| **Azure App Service** | - | Plataforma de hospedagem |
 
 ---
 
 ## ✨ Funcionalidades
 
-| Funcionalidade | Descrição |
-|--------|------------|
-| ➕ Cadastrar Produto | Cria um novo produto |
-| 📄 Listar Produtos | Retorna todos os produtos |
-| 🔍 Buscar por ID | Busca produto específico |
-| 💲 Buscar por Preço | Produtos acima de determinado valor |
-| 📦 Buscar por Quantidade | Produtos com estoque acima de X |
-| ✏️ Atualizar Produto | Edita dados do produto |
-| 🗑️ Excluir Produto | Remove produto do banco |
+- ✅ **Cadastrar Produto** - Criação de novos produtos com validação
+- ✅ **Listar Produtos** - Consulta de todos os produtos cadastrados
+- ✅ **Buscar por ID** - Busca específica de um produto
+- ✅ **Atualizar Produto** - Edição de dados de produtos existentes
+- ✅ **Excluir Produto** - Remoção de produtos do sistema
+- ✅ **Interface Web** - Frontend simples para gerenciamento
+- ✅ **Documentação Swagger** - API totalmente documentada
 
 ---
 
 ## 🏗️ Arquitetura do Projeto
 
-O projeto segue o padrão:
+O projeto segue o padrão de arquitetura em camadas:
 
-Controller → Service → Repository → Banco (H2)
+```
+Controller (REST) → Service (Regras de Negócio) → Repository (JPA) → Database (H2)
+```
 
+### 📁 Estrutura de Pastas
 
-### 📌 Responsabilidades
-
-- **Controller**: recebe requisições HTTP (Postman / Front-end)
-- **Service**: contém regras de negócio
-- **Repository**: comunicação com o banco via JPA
-- **Entity (Model)**: representa a tabela no banco
+```
+src/main/java/com/nando/Cadastro/
+├── controller/          # Endpoints REST
+│   └── ProdutoController.java
+├── service/            # Lógica de negócio
+│   ├── ProdutoService.java
+│   └── ProdutoServiceImpl.java
+├── repository/         # Acesso ao banco de dados
+│   └── ProdutoRepository.java
+├── model/              # Entidades JPA
+│   └── Produto.java
+├── dto/                # Data Transfer Objects
+│   ├── ProdutoRequestDTO.java
+│   └── ProdutoResponseDTO.java
+├── mapper/             # Conversão entre entidades e DTOs
+│   └── ProdutoMapper.java
+└── exception/          # Tratamento de exceções
+    ├── GlobalExceptionHandler.java
+    ├── ProdutoNaoEncontrado.java
+    └── ErrorResponse.java
+```
 
 ---
 
-## 🚀 Como Executar
+## 🚀 Como Executar Localmente
 
-### ✅ Pré-requisitos
+### Pré-requisitos
 
-- Java JDK 17+ (projeto usando Java 25)
-- Maven
-- IDE (IntelliJ, VS Code ou Eclipse)
+- **Java JDK 17** ou superior
+- **Maven** 3.6+
+- **IDE** (IntelliJ IDEA, Eclipse ou VS Code)
+
+### Passos para Execução
+
+1. **Clone o repositório**
+   ```bash
+   git clone <url-do-repositorio>
+   cd projeto_Final
+   ```
+
+2. **Execute a aplicação**
+   ```bash
+   mvn spring-boot:run
+   ```
+   Ou execute diretamente pela IDE através da classe `CadastroApplication.java`
+
+3. **Acesse a aplicação**
+   - **Interface Web**: http://localhost:8080
+   - **Swagger UI**: http://localhost:8080/swagger-ui/index.html
+   - **API Base**: http://localhost:8080/produtos
 
 ---
 
-### ▶ Executando o Projeto
+## 📡 Endpoints da API
 
-```bash
-# clonar o repositório
-git clone https://github.com/seu-usuario/seu-repositorio.git
+### Base URL
+```
+https://josefernando-b6adcrbwfyh3czff.canadacentral-01.azurewebsites.net/produtos
+```
 
-# entrar na pasta
-cd Cadastro
+### Métodos Disponíveis
 
-# rodar a aplicação
-mvn spring-boot:run
-Ou execute diretamente pela IDE.
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| `POST` | `/produtos` | Criar um novo produto |
+| `GET` | `/produtos` | Listar todos os produtos |
+| `GET` | `/produtos/{id}` | Buscar produto por ID |
+| `PUT` | `/produtos/{id}` | Atualizar um produto |
+| `DELETE` | `/produtos/{id}` | Excluir um produto |
 
-A API ficará disponível em:
+### Exemplo de Requisição (POST)
 
-http://localhost:8080
-🗄️ Banco de Dados H2
-O banco utilizado é o H2 em memória, criado automaticamente ao iniciar a aplicação.
-
-🔗 Acessar Console H2
-http://localhost:8080/h2-console
-Configuração:
-
-JDBC URL: jdbc:h2:mem:produtosdb
-
-User: sa
-
-Password: (vazio)
-
-🔥 Endpoints Principais
-➕ Criar Produto
+```json
 POST /produtos
+Content-Type: application/json
 
 {
-  "nome": "Mouse",
-  "preco": 120,
-  "quantidade": 10
+  "nome": "Notebook Dell",
+  "preco": 3500.00,
+  "quantidade": 15
 }
-📄 Listar Produtos
-GET /produtos
+```
 
-🔍 Buscar por ID
-GET /produtos/{id}
+### Exemplo de Resposta
 
-💲 Buscar por Preço Maior que X
-GET /produtos/preco-maior?valor=500
+```json
+{
+  "id": 1,
+  "nome": "Notebook Dell",
+  "preco": 3500.00,
+  "quantidade": 15
+}
+```
 
-📦 Buscar por Quantidade Maior que X
-GET /produtos/quantidade-maior?qtd=5
+> 📚 **Documentação Completa**: Acesse o [Swagger UI](https://josefernando-b6adcrbwfyh3czff.canadacentral-01.azurewebsites.net/swagger-ui/index.html) para ver todos os endpoints detalhados com exemplos de requisição e resposta.
 
-🗑️ Excluir Produto
-DELETE /produtos/{id}
+---
 
-🧠 Conceitos Aplicados
-☕ Java / POO
-Classes
+## 🗄️ Banco de Dados
 
-Encapsulamento
+O projeto utiliza **H2 Database** configurado para persistência em arquivo:
 
-Construtores
+- **Tipo**: H2 File Database
+- **Localização**: `/home/site/data/produtos-db` (produção)
+- **Dialeto**: H2Dialect
+- **DDL**: `update` (cria/atualiza tabelas automaticamente)
 
-DTO implícito via Entity
+---
 
-🌱 Spring Boot
-Injeção de dependência
+## 🧪 Testes
 
-Controllers REST
+Execute os testes unitários com:
 
-Configuração automática
+```bash
+mvn test
+```
 
-🗄️ JPA / Hibernate
-@Entity
+---
 
-@Id e @GeneratedValue
+## 📦 Build e Deploy
 
-Repositories
+### Build do Projeto
 
-Queries por nome de método
+```bash
+mvn clean package
+```
 
-🌐 API REST
-HTTP Methods (GET, POST, PUT, DELETE)
+O arquivo JAR será gerado em: `target/app.jar`
 
-JSON
+### Deploy no Azure
 
-Postman para testes
+O projeto está configurado para deploy automático no Azure App Service através do GitHub Actions (`.github/workflows/main_josefernando.yml`).
 
-⚠️ Limitações (Didáticas)
-❌ Banco em memória (dados se perdem ao reiniciar)
-❌ Sem autenticação
-❌ Sem front-end integrado
+---
 
-Projeto focado em aprendizado de backend com Spring Boot.
+## 🎓 Conceitos Aplicados
 
-📝 Melhorias Futuras
+### ☕ Java
+- Programação Orientada a Objetos (POO)
+- Encapsulamento
+- Interfaces e Implementações
+- Anotações
 
-- Funcionalidades
-- Categorias de produtos
-- Paginação
-- Ordenação
-- Upload de imagem do produto
-- Técnicas
-- Migrar H2 → MySQL ou PostgreSQL
-- Criar DTOs
-- Validações avançadas
+### 🌱 Spring Boot
+- Injeção de Dependência
+- Controllers REST
+- Service Layer Pattern
+- Auto-configuration
+
+### 🗄️ JPA / Hibernate
+- Mapeamento Objeto-Relacional (ORM)
+- Entidades JPA
+- Repositories
+- Queries automáticas
+
+### 🌐 API REST
+- Métodos HTTP (GET, POST, PUT, DELETE)
+- Status Codes apropriados
+- JSON como formato de dados
+- CORS configurado
+
+### 🛡️ Boas Práticas
+- DTOs para transferência de dados
 - Tratamento global de exceções
-- Documentação com Swagger
+- Validação de dados de entrada
+- Separação de responsabilidades
 
-👨‍💻 Autor
-Projeto desenvolvido por José Fernando
-Bootcamp Java 
+---
+
+## 📝 Melhorias Futuras
+
+- [ ] Implementar autenticação e autorização (JWT)
+- [ ] Adicionar paginação nas listagens
+- [ ] Implementar busca e filtros avançados
+- [ ] Adicionar categorias de produtos
+- [ ] Upload de imagens dos produtos
+- [ ] Migrar para PostgreSQL ou MySQL
+- [ ] Implementar testes de integração
+- [ ] Adicionar cache com Redis
+- [ ] Implementar logs estruturados
+
+---
+
+## 👨‍💻 Autor
+
+**José Fernando**
+
+Projeto desenvolvido como trabalho final do **Bootcamp Java**.
+
+---
+
+## 📄 Licença
+
+Este projeto foi desenvolvido para fins educacionais.
+
+---
+
+<div align="center">
+
+**Desenvolvido com ❤️ durante o Bootcamp Java**
+
+[⬆ Voltar ao topo](#-gerenciador-de-produtos)
+
+</div>
